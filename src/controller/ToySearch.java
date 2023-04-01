@@ -58,15 +58,23 @@ public class ToySearch {
 	@FXML
 	private ListView<Toy> toyListView;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@FXML
 	private TextField removeField;
-	
+
+	@FXML 
+	private Button searchToRemoveButton;
+
 	@FXML 
 	private Button removeButton;
-	
+
+	@FXML
+	private Button removeTabRefreshButton;
+
 	@FXML
 	private ListView<Toy> removeToyListView;
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private ArrayList<Toy> toyList = new ArrayList<>();
 
@@ -149,14 +157,15 @@ public class ToySearch {
 			//Displaying Toy List on startup
 			for (Toy t: toyList) {
 				toyListView.getItems().add(t);
-				
+				removeToyListView.getItems().add(t);
+
 			}
 		}
 	}
 
-// Searching for a Toy Tab
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	// Searching for a Toy Tab
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public void searchButtonHandler() throws Exception {
 
 		String input = searchField.getText();
@@ -233,12 +242,12 @@ public class ToySearch {
 	public void buyButtonHandler() {
 		Toy selected = toyListView.getSelectionModel().getSelectedItem();
 		if(selected.getAvailableCount() != 0) {
-		selected.setAvailableCount(selected.getAvailableCount() - 1);
+			selected.setAvailableCount(selected.getAvailableCount() - 1);
 		}
 		else {
 			System.out.println("Selected item is out of stock! Try again.  \n");
 		}
-		
+
 		try {
 			FileWriter fw1 = new FileWriter(FILE_PATH, false);
 			PrintWriter printWriter = new PrintWriter(fw1, false);
@@ -247,9 +256,9 @@ public class ToySearch {
 			fw1.close();
 		}
 		catch(Exception exception){
-			
+
 			System.out.println("This is not a valid option! Try again.  \n");
-			
+
 		}
 
 		try {
@@ -257,42 +266,79 @@ public class ToySearch {
 			for (int j = 0; j < temp; j++) {
 				toyList.get(j).save(FILE_PATH);
 			}
-			
+
 			ArrayList<Toy> currentSearch = new ArrayList<Toy>(toyListView.getItems());
 			toyListView.getItems().clear();
 			for (Toy toy: currentSearch) {
 				toyListView.getItems().add(toy);
 			}
-			
+
 		}
 		catch (NullPointerException | IOException e) {
 			e.printStackTrace();
 		}
 	}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-//Adding a Toy Tab
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-//Removing a Toy Tab
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public void removeButtonHandler() {
-		String input = searchField.getText();
+
+	//Adding a Toy Tab
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+	//Removing a Toy Tab
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public void searchToRemoveButtonHandler() {
+		String input = removeField.getText();
+		removeToyListView.getItems().clear();
+
 		for (Toy toy: toyList) {
-				if(toy.getSerialNumber().equals(input)) {
-					toyListView.getItems().add(toy);
-				}
-			}
-			
-		Toy selected = toyListView.getSelectionModel().getSelectedItem();
-		for (Toy toy: toyList) {
-			if (toy == selected) {
-				toyList.remove(toy);
+			if(toy.getSerialNumber().equals(input)) {
+				removeToyListView.getItems().add(toy);
 			}
 		}
 	}
-	
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
+
+	public void removeButtonHandler() {
+		Toy selected = removeToyListView.getSelectionModel().getSelectedItem();
+		ArrayList<Toy> toyListCopy = (ArrayList<Toy>)toyList.clone();
+		for (Toy toy: toyListCopy) {
+			if (selected == toy) {
+				toyList.remove(toy);
+				removeToyListView.getItems().remove(toy);
+			}
+		}
+
+		try {
+			FileWriter fw1 = new FileWriter(FILE_PATH, false);
+			PrintWriter printWriter = new PrintWriter(fw1, false);
+			printWriter.flush();
+			printWriter.close();
+			fw1.close();
+		}
+		catch(Exception exception){
+
+			System.out.println("This is not a valid option! Try again.  \n");
+
+		}
+
+		try {
+			int temp = toyList.size();
+			for (int j = 0; j < temp; j++) {
+				toyList.get(j).save(FILE_PATH);
+			}
+		}
+		catch (NullPointerException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void removeTabRefreshButtonHandler() {
+		removeToyListView.getItems().clear();
+		for (Toy t: toyList) {
+			removeToyListView.getItems().add(t);
+		}
+	}
 }
+
