@@ -1,5 +1,15 @@
-## assignment 3 template
+<!-- Assignment 2 Individual Contributions -->
 
-Instructions for this assignment are [here](https://github.com/MRU-COMP1502-2023/instructions/blob/main/assignment_3.md)
+Mitchel Chanthaseng:
+- Menu Display and Input Validation
+- Toy Classes and Toy Superclass
+- JUnit Tests
+- Custom Exceptions
+- JavaDoc Comments
 
-Before submission, replace the contents of this README with your own.
+Harold Cuellar:
+- Project Directory Structure
+- Data Storage (Loading and Saving)
+- Search Toy and Purchase Toy
+- Menu options (Add and Remove a Toy)
+- JavaDoc Comments
