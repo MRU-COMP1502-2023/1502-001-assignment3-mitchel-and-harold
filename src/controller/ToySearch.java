@@ -327,7 +327,7 @@ public class ToySearch {
 			int temp = toyList.size();
 			for (int j = 0; j < temp; j++) {
 				toyList.get(j).save(FILE_PATH);
-			}
+			} 
 		}
 		catch (NullPointerException | IOException e) {
 			e.printStackTrace();
