@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -30,50 +31,77 @@ public class ToySearch {
 
 	@FXML
 	private RadioButton nameRadioButton;
-
 	@FXML
 	private RadioButton typeRadioButton;
-
 	@FXML
 	private RadioButton serialNumRadioButton;
-
 	@FXML
 	private Button searchButton;
-
 	@FXML
 	private Button clearButton;
-
 	@FXML
 	private Button buyButton;
-
 	@FXML
 	private Button refreshButton;
-
 	@FXML 
 	private TextField searchField;
-
 	@FXML
 	private ToggleGroup toggleGroup1;
-
 	@FXML
 	private ListView<Toy> toyListView;
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@FXML
 	private TextField removeField;
-
 	@FXML 
 	private Button searchToRemoveButton;
-
 	@FXML 
 	private Button removeButton;
-
 	@FXML
 	private Button removeTabRefreshButton;
-
 	@FXML
 	private ListView<Toy> removeToyListView;
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	@FXML
+	private RadioButton figureRadioButton;
+	@FXML
+	private RadioButton animalRadioButton;
+	@FXML
+	private RadioButton puzzleRadioButton;
+	@FXML
+	private RadioButton boardGameRadioButton;
+	@FXML
+	private ToggleGroup toggleGroup2;
+	@FXML
+	private TextField ageField;
+	@FXML
+	private TextField brandField;
+	@FXML
+	private TextField classificationField;
+	@FXML
+	private TextField countField;
+	@FXML
+	private TextField designersField;
+	@FXML
+	private TextField maxPlayersField;
+	@FXML
+	private TextField materialField;
+	@FXML
+	private TextField sizeField;
+	@FXML
+	private TextField typeField;
+	@FXML
+	private TextField snField;
+	@FXML
+	private TextField minPlayersField;
+	@FXML
+	private TextField priceField;
+	@FXML
+	private TextField nameField;
+	@FXML
+	private Button addToyButton;
+	@FXML
+	private Label status;
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private ArrayList<Toy> toyList = new ArrayList<>();
@@ -281,26 +309,76 @@ public class ToySearch {
 
 	//Adding a Toy Tab
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	public void addToyHandler() {
-		
+	public void addToyButtonHandler() {
 
-		if (nameRadioButton.isSelected()) {
-		if(toy.getName().equals(input)) {
-			toyListView.getItems().add(toy);
-		}	
-	}
-	else if (serialNumRadioButton.isSelected()) {
-		if(toy.getSerialNumber().equals(input)) {
-			toyListView.getItems().add(toy);
+		ArrayList<Object> newToy = new ArrayList<Object>();
+		String sn = snField.getText();
+		String name = nameField.getText();
+		String brand = brandField.getText();
+		float price = Float.parseFloat(priceField.getText());
+		int count = Integer.parseInt(countField.getText());
+		int age = Integer.parseInt(ageField.getText());
+
+		if (figureRadioButton.isSelected()) {
+			char classification = classificationField.getText().charAt(0);
+			Toy newToyF = new Figures(sn, brand, name, price, count, age, classification); 
+			toyList.add(newToyF);
+			status.setText("Toy has been added!");
+		}
+		else if (animalRadioButton.isSelected()) {
+			String material = materialField.getText();
+			char size = sizeField.getText().charAt(0);
+			Toy newToyF = new Animals(sn, brand, name, price, count, age, material, size); 
+			toyList.add(newToyF);
+			status.setText("Toy has been added!");
+		}
+		else if (puzzleRadioButton.isScaleShape()) {
+			char type = typeField.getText().charAt(0);
+			Toy newToyF = new Puzzles(sn, brand, name, price, count, age, type); 
+			toyList.add(newToyF);
+			status.setText("Toy has been added!");
+		}
+		else if (boardGameRadioButton.isSelected()) {
+			List<String> designerlist = null;
+			String minPlayers = minPlayersField.getText();
+			String maxPlayers = maxPlayersField.getText();
+			String numOfPlayers = minPlayers + "-" + maxPlayers;
+			String[] designers = designersField.getText().split(",");
+			for (String person: designers) {
+				designerlist.add(name);
+			}
+			Toy newToyF = new BoardGames(sn, brand, name, price, count, age, numOfPlayers, designerlist); 
+			toyList.add(newToyF);
+			status.setText("Toy has been added!");
+		}
+		else {
+
+			System.out.println("Must select a toy catagory.  \n");
+
+		}
+
+		try {
+			FileWriter fw1 = new FileWriter(FILE_PATH, false);
+			PrintWriter printWriter = new PrintWriter(fw1, false);
+			printWriter.flush();
+			printWriter.close();
+			fw1.close();
+		}
+		catch(Exception exception){
+
+			System.out.println("This is not a valid option! Try again.  \n");
+
+		}
+		try {
+			int temp = toyList.size();
+			for (int j = 0; j < temp; j++) {
+				toyList.get(j).save(FILE_PATH);
+			} 
+		}
+		catch (NullPointerException | IOException e) {
+			e.printStackTrace();
 		}
 	}
-
-	else if (typeRadioButton.isSelected()) {
-	}
-	
-
-
-
 
 	//Removing a Toy Tab
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
