@@ -281,7 +281,23 @@ public class ToySearch {
 
 	//Adding a Toy Tab
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public void addToyHandler() {
+		
 
+		if (nameRadioButton.isSelected()) {
+		if(toy.getName().equals(input)) {
+			toyListView.getItems().add(toy);
+		}	
+	}
+	else if (serialNumRadioButton.isSelected()) {
+		if(toy.getSerialNumber().equals(input)) {
+			toyListView.getItems().add(toy);
+		}
+	}
+
+	else if (typeRadioButton.isSelected()) {
+	}
+	
 
 
 
