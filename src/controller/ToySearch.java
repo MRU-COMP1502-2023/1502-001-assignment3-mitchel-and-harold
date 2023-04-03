@@ -321,20 +321,20 @@ public class ToySearch {
 
 		if (figureRadioButton.isSelected()) {
 			char classification = classificationField.getText().charAt(0);
-			Toy newToyF = new Figures(sn, brand, name, price, count, age, classification); 
+			Toy newToyF = new Figures(sn, name, brand, price, count, age, classification); 
 			toyList.add(newToyF);
 			status.setText("Toy has been added!");
 		}
 		else if (animalRadioButton.isSelected()) {
 			String material = materialField.getText();
 			char size = sizeField.getText().charAt(0);
-			Toy newToyF = new Animals(sn, brand, name, price, count, age, material, size); 
+			Toy newToyF = new Animals(sn, name, brand, price, count, age, material, size); 
 			toyList.add(newToyF);
 			status.setText("Toy has been added!");
 		}
 		else if (puzzleRadioButton.isScaleShape()) {
 			char type = typeField.getText().charAt(0);
-			Toy newToyF = new Puzzles(sn, brand, name, price, count, age, type); 
+			Toy newToyF = new Puzzles(sn, name, brand, price, count, age, type); 
 			toyList.add(newToyF);
 			status.setText("Toy has been added!");
 		}
@@ -347,7 +347,7 @@ public class ToySearch {
 			for (String person: designers) {
 				designerlist.add(name);
 			}
-			Toy newToyF = new BoardGames(sn, brand, name, price, count, age, numOfPlayers, designerlist); 
+			Toy newToyF = new BoardGames(sn, name, brand, price, count, age, numOfPlayers, designerlist); 
 			toyList.add(newToyF);
 			status.setText("Toy has been added!");
 		}
