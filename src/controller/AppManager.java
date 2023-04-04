@@ -1,33 +1,46 @@
 package controller;
-import model.*;
-
-import view.AppMenu;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import exceptions.CustomException;
 import exceptions.InvalidIntException;
 import exceptions.PlayerRangeException;
-
-import java.util.ArrayList;
+import model.Animals;
+import model.BoardGames;
+import model.Figures;
+import model.Puzzles;
+import model.Toy;
+import view.AppMenu;
 
 /** Main controller of store and managing menu inputs
  * @author Mitchel Chanthaseng
  * @author Harold Cuellar
  */
 public class AppManager {
-
 	static ArrayList<Toy> toyType = new ArrayList<>();
 	static int list_size;
 	private final String FILE_PATH = "./res/toys.txt";
-	private AppMenu am = new AppMenu();
+	private AppMenu am;
 
 	public AppManager() throws Exception {
 		loadToys();
+		am = new AppMenu();
 		am.FirstTimeDisplay();
 		launchApplication();
+	}
+	
+	public AppManager(boolean test) {
+		loadToys();
+	}
+
+	public Toy getLastInserted() {
+		return toyType.get(list_size);
 	}
 
 	/**  Use Toy class and convert each line from .txt file into a toy type based on
@@ -156,7 +169,6 @@ public class AppManager {
 		try {
 			String serialNumber = am.toySearchPrompt("Serial Number");
 			if (serialNumber.length() != 10) {
-				System.out.println("The Serial Number should contain 10 digits only! try again .");
 				addToy();
 			}
 			if (validate(serialNumber)) {
@@ -194,14 +206,7 @@ public class AppManager {
 			List<String> designers = new ArrayList<>();
 			System.out.println("Enter Designers: (User ',' to separate the names if there is more than one name.) ");
 			String numOfDesigners = new Scanner(System.in).nextLine();
-			String[] list = numOfDesigners.trim().split(",");
-			for (String st : list) {
-				if (st != null) {
-					designers.add(st);
-				}
-			}
-			BoardGames boardGames = new BoardGames(serialNumber, name, brand, price, availableCount, age,mininumberofplayers+"-"+maxnumberofplayer, designers);
-			toyType.add(boardGames);
+			addToy(serialNumber, name, brand, price, availableCount, age,mininumberofplayers, maxnumberofplayer, numOfDesigners);
 
 			System.out.println("\nToy Added.\n");
 			launchApplication();
@@ -216,7 +221,18 @@ public class AppManager {
 		catch (PlayerRangeException e) {
 			e.printStackTrace();
 		}
+	}
 
+	public void addToy(String serialNumber, String name, String brand, float price, int availableCount, int age, int mininumberofplayers, int maxnumberofplayer, String numOfDesigners) {
+		String[] list = numOfDesigners.trim().split(",");
+		ArrayList<String> designers = new ArrayList<>();
+		for (String st : list) {
+			if (st != null) {
+				designers.add(st);
+			}
+		}
+		BoardGames boardGames = new BoardGames(serialNumber, name, brand, price, availableCount, age,mininumberofplayers+"-"+maxnumberofplayer, designers);
+		toyType.add(boardGames);
 	}
 
 	/**
@@ -262,8 +278,6 @@ public class AppManager {
 	public void removeToy() throws InvalidIntException {
 
 		String serialNumberString = am.toySearchPrompt("Enter Serial Number:");
-		Toy toy_ = null;
-		boolean f = false;
 		if(!isSerialAlreadyExists(serialNumberString))
 		{
 			System.out.println("The Serial Number doesn't exists! try again .");
@@ -271,23 +285,11 @@ public class AppManager {
 		}
 		else
 		{
-			for (Toy toy: toyType) {
-				if(toy.getSerialNumber().equals(serialNumberString))
-				{
-					toy_ = toy;
-					System.out.println("This Item Found: ");
-					printToString(serialNumberString.charAt(0),toy);
-					f = true;
-					break;
-				} else continue;
-			}
-
-			if(f) {
-
+			if(findToyBySerialNumber(serialNumberString) != null) {
 				System.out.println("Do you want to remove it? (Y/N)");
 				String option = new Scanner(System.in).nextLine();
 				if (option.equalsIgnoreCase("Y")) {
-					toyType.remove(toy_);
+					removeToy(serialNumberString);
 					System.out.println("Item Removed");
 					String enterkey = am.toySearchPrompt("Press Enter Key to Continue...");
 					if (enterkey.equals("")) {
@@ -303,6 +305,28 @@ public class AppManager {
 				launchApplication();
 			}
 		}
+	}
+
+	public void removeToy(Toy toy_) {
+		toyType.remove(toy_);
+	}
+
+	public void removeToy(String serialNumber) {
+		Toy toy_ = findToyBySerialNumber(serialNumber);
+		removeToy(toy_);
+	}
+
+	public Toy findToyBySerialNumber(String serialNumber) {
+		Toy toy_ = null;
+		for (Toy toy: toyType) {
+			if (toy.getSerialNumber().equals(serialNumber)) {
+				toy_ = toy;
+				System.out.println("This Item Found: ");
+				printToString(serialNumber.charAt(0), toy);
+				break;
+			} else continue;
+		}
+		return toy_;
 	}
 	/**
 	 * Method to clear the file 
@@ -389,7 +413,6 @@ public class AppManager {
 
 			String serialNumberString = am.toySearchPrompt("Toy Serial Number:");
 			int count = 0;
-			boolean isF = false;
 			Toy selected = null;
 			for (Toy toy: toyType) {
 				if(toy.getSerialNumber().equals(serialNumberString))
@@ -397,12 +420,11 @@ public class AppManager {
 					selected = toy;
 					count++;
 					System.out.println("[" + count +"] "+ toy.toString());
-					isF = true;
 					break;
 				} else continue;
 			}
 
-			if(isF == true)
+			if(count > 0)
 			{
 				count++;
 				System.out.println("[" + count +"] Back To SearchMenu");
@@ -439,7 +461,7 @@ public class AppManager {
 				}
 			}
 
-			if(isF == false)
+			if(count > 0)
 			{
 				System.out.println("Toy not found ");
 			}
