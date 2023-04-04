@@ -185,6 +185,76 @@ public class ToySearch {
 			}
 		}
 	}
+	
+	public ArrayList<Toy> findBySerialNumber(String serialNumber) {
+		ArrayList<Toy> toys = new ArrayList();
+		for (Toy toy: toyList) {
+			if(toy.getSerialNumber().equals(serialNumber)) {
+				toys.add(toy);
+			}
+		}
+		
+		return toys;
+	}
+	
+	public ArrayList<Toy> findByName(String name) {
+		ArrayList<Toy> toys = new ArrayList();
+		for (Toy toy: toyList) {
+			if(toy.getName().equals(name)) {
+				toys.add(toy);
+			}
+		}
+		return toys;
+	}
+	
+	public ArrayList<Toy> findByType(String type) {
+		ArrayList<Toy> toys = new ArrayList();
+		for (Toy toy: toyList) {
+			char t = 0;
+			if(type.equalsIgnoreCase("animal") || type.equalsIgnoreCase("animals")){
+				t = 1;
+			}
+			else if(type.equalsIgnoreCase("boardGames") || type.equalsIgnoreCase("boardGame")){
+				t = 2;
+			}
+			else if(type.equalsIgnoreCase("Figures") || type.equalsIgnoreCase("Figure")){
+				t = 3;
+			}
+			else if(type.equalsIgnoreCase("puzzles") || type.equalsIgnoreCase("puzzle")){
+				t = 4;
+			}
+
+			if(t == 1) {
+				if (toy instanceof Animals) {
+					toys.add(toy);
+				} 
+			}
+			else
+				if(t == 2) {
+					if (toy instanceof BoardGames) {
+						toys.add(toy);
+					} 
+				}
+				else
+					if(t == 3) {
+						if (toy instanceof Figures) {
+							toys.add(toy);
+						} 
+					}
+					else
+						if(t == 4) {
+							if (toy instanceof Puzzles) {
+								toys.add(toy);
+							} 
+						}
+		}
+			return toys;
+	}
+	
+	public void addToy(Toy toy) {
+		list_size++;
+		toyList.add(toy);
+	}
 
 	// Searching for a Toy Tab
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,61 +263,23 @@ public class ToySearch {
 
 		String input = searchField.getText();
 		toyListView.getItems().clear();
+		
+		ArrayList<Toy> toys = null;
+		if (nameRadioButton.isSelected()) {
+			toys = findByName(input);
+		}
+		else if (serialNumRadioButton.isSelected()) {
+			toys = findBySerialNumber(input);
+		}
+		else if (typeRadioButton.isSelected()) {
+			toys = findByType(input);
+		}
+		else {
+			throw new Exception("must select name, serial number, of type");
+		}
 
-		for (Toy toy: toyList) {
-			if (nameRadioButton.isSelected()) {
-				if(toy.getName().equals(input)) {
-					toyListView.getItems().add(toy);
-				}	
-			}
-			else if (serialNumRadioButton.isSelected()) {
-				if(toy.getSerialNumber().equals(input)) {
-					toyListView.getItems().add(toy);
-				}
-			}
-
-			else if (typeRadioButton.isSelected()) {
-				char t = 0;
-				if(input.equalsIgnoreCase("animal") || input.equalsIgnoreCase("animals")){
-					t = 1;
-				}
-				else if(input.equalsIgnoreCase("boardGames") || input.equalsIgnoreCase("boardGame")){
-					t = 2;
-				}
-				else if(input.equalsIgnoreCase("Figures") || input.equalsIgnoreCase("Figure")){
-					t = 3;
-				}
-				else if(input.equalsIgnoreCase("puzzles") || input.equalsIgnoreCase("puzzle")){
-					t = 4;
-				}
-
-				if(t == 1) {
-					if (toy instanceof Animals) {
-						toyListView.getItems().add(toy);
-					} 
-				}
-				else
-					if(t == 2) {
-						if (toy instanceof BoardGames) {
-							toyListView.getItems().add(toy);
-						} 
-					}
-					else
-						if(t == 3) {
-							if (toy instanceof Figures) {
-								toyListView.getItems().add(toy);
-							} 
-						}
-						else
-							if(t == 4) {
-								if (toy instanceof Puzzles) {
-									toyListView.getItems().add(toy);
-								} 
-							}
-			}
-			else {
-				throw new Exception("must select name, serial number, of type");
-			}
+		for (Toy toy: toys) {
+			toyListView.getItems().add(toy);
 		}
 	}
 
