@@ -14,8 +14,6 @@ import java.util.logging.Logger;
 
 public class Main extends Application {
 
-    private static final Logger LOGGER = Logger.getLogger("Mylogger");
-
     @Override
     public void start(Stage stage) throws IOException {
         // load the FXML file
@@ -29,12 +27,9 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        LOGGER.log(Level.INFO, "Application started successfully.");
     }
 
     public static void main(String[] args) {
-    	
-        LOGGER.log(Level.INFO, "Application is starting...");
         launch(args);
     }
 }

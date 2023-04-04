@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -110,6 +111,8 @@ public class ToySearch {
 	private final String FILE_PATH = "./res/toys.txt";
 
 	static int list_size;
+	
+	private static final Logger LOGGER = Logger.getLogger("Mylogger");
 
 	/**
 	 * Initializer that loads the file with all the toy information and stores it into a toy list.
@@ -121,7 +124,7 @@ public class ToySearch {
 		String thisLine;
 		String[] separateLine;
 		if (txt.exists()) {
-
+			LOGGER.info("Loading data");
 			try {
 				Scanner inputFile = new Scanner(txt);
 				while (inputFile.hasNext()) {
@@ -195,6 +198,7 @@ public class ToySearch {
 
 			}
 		}
+		LOGGER.info("Data Loaded");
 	}
 
 	public ArrayList<Toy> findBySerialNumber(String serialNumber) {
@@ -278,7 +282,7 @@ public class ToySearch {
 
 		String input = searchField.getText();
 		toyListView.getItems().clear();
-
+		LOGGER.info("Searching for: " + input);
 		ArrayList<Toy> toys = null;
 		if (nameRadioButton.isSelected()) {
 			toys = findByName(input);
