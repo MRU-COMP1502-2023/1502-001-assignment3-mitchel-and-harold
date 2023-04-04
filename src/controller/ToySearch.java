@@ -24,6 +24,8 @@ import model.Toy;
 
 public class ToySearch {
 
+	//Search Toy Tab Attributes
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@FXML
 	private RadioButton nameRadioButton;
 	@FXML
@@ -44,6 +46,8 @@ public class ToySearch {
 	private ToggleGroup toggleGroup1;
 	@FXML
 	private ListView<Toy> toyListView;
+
+	//Remove Toy Tab Attributes
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@FXML
 	private TextField removeField;
@@ -56,6 +60,7 @@ public class ToySearch {
 	@FXML
 	private ListView<Toy> removeToyListView;
 
+	//Add Toy Tab Attributes
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@FXML
 	private RadioButton figureRadioButton;
@@ -97,14 +102,20 @@ public class ToySearch {
 	private Button addToyButton;
 	@FXML
 	private Label status;
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	//General Class Attributes
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private ArrayList<Toy> toyList = new ArrayList<>();
 
 	private final String FILE_PATH = "./res/toys.txt";
 
 	static int list_size;
 
+	/**
+	 * Initializer that loads the file with all the toy information and stores it into a toy list.
+	 * Once the file is read, initialize() displays all the toys in scene builder on start up.
+	 * @author Mitchel Chanthaseng
+	 */
 	public void initialize() {
 		File txt = new File(FILE_PATH);
 		String thisLine;
@@ -185,7 +196,7 @@ public class ToySearch {
 			}
 		}
 	}
-	
+
 	public ArrayList<Toy> findBySerialNumber(String serialNumber) {
 		ArrayList<Toy> toys = new ArrayList();
 		for (Toy toy: toyList) {
@@ -193,10 +204,10 @@ public class ToySearch {
 				toys.add(toy);
 			}
 		}
-		
+
 		return toys;
 	}
-	
+
 	public ArrayList<Toy> findByName(String name) {
 		ArrayList<Toy> toys = new ArrayList();
 		for (Toy toy: toyList) {
@@ -206,7 +217,7 @@ public class ToySearch {
 		}
 		return toys;
 	}
-	
+
 	public ArrayList<Toy> findByType(String type) {
 		ArrayList<Toy> toys = new ArrayList();
 		for (Toy toy: toyList) {
@@ -248,9 +259,9 @@ public class ToySearch {
 							} 
 						}
 		}
-			return toys;
+		return toys;
 	}
-	
+
 	public void addToy(Toy toy) {
 		list_size++;
 		toyList.add(toy);
@@ -258,12 +269,16 @@ public class ToySearch {
 
 	// Searching for a Toy Tab
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+	/**
+	 * Search button handler that searches the toys list and displays toys depending on which search is selected.
+	 * @throws Exception			No radio button selected
+	 * @author Mitchel Chanthaseng
+	 */
 	public void searchButtonHandler() throws Exception {
 
 		String input = searchField.getText();
 		toyListView.getItems().clear();
-		
+
 		ArrayList<Toy> toys = null;
 		if (nameRadioButton.isSelected()) {
 			toys = findByName(input);
@@ -283,10 +298,18 @@ public class ToySearch {
 		}
 	}
 
+	/**
+	 * Clear button handler that clears the current display.
+	 * @author Mitchel Chanthaseng
+	 */
 	public void clearButtonHandler() {
 		toyListView.getItems().clear();
 	}
 
+	/**
+	 * Refresh button handler that clears the current display and then display the entire toy list.
+	 * @author Mitchel Chanthaseng
+	 */
 	public void refreshButtonHandler() {
 		toyListView.getItems().clear();
 		for (Toy t: toyList) {
@@ -294,6 +317,11 @@ public class ToySearch {
 		}
 	}
 
+	/**
+	 * Buy button handler that updates the selected toy's available count by -1 and
+	 * automatically saves it into the data base when purchased.
+	 * @author Mitchel Chanthaseng
+	 */
 	public void buyButtonHandler() {
 		Toy selected = toyListView.getSelectionModel().getSelectedItem();
 		if(selected.getAvailableCount() != 0) {
@@ -336,6 +364,11 @@ public class ToySearch {
 
 	//Adding a Toy Tab
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Add toy button handler that adds a toy depending on which toy type is selected and
+	 * automatically saves it into the data base when added.
+	 * @author Mitchel Chanthaseng
+	 */
 	public void addToyButtonHandler() {
 
 		ArrayList<Object> newToy = new ArrayList<Object>();
@@ -409,6 +442,11 @@ public class ToySearch {
 
 	//Removing a Toy Tab
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/**
+	 * Search button in remove toy tab handler that searhes the toy list for a matching serial number and displays
+	 * the toy to the user if found.
+	 * @author Mitchel Chanthaseng
+	 */
 	public void searchToRemoveButtonHandler() {
 		String input = removeField.getText();
 		removeToyListView.getItems().clear();
@@ -420,7 +458,10 @@ public class ToySearch {
 		}
 	}
 
-
+	/**
+	 * Remove button handler that will remove the selected toy from the toy list and display.
+	 * @author Mitchel Chanthaseng
+	 */
 	public void removeButtonHandler() {
 		Toy selected = removeToyListView.getSelectionModel().getSelectedItem();
 		ArrayList<Toy> toyListCopy = (ArrayList<Toy>)toyList.clone();
@@ -455,6 +496,9 @@ public class ToySearch {
 		}
 	}
 
+	/**
+	 * Refresh button in remove tab handler that will clear the current display and display the entire toy list. 
+	 */
 	public void removeTabRefreshButtonHandler() {
 		removeToyListView.getItems().clear();
 		for (Toy t: toyList) {
