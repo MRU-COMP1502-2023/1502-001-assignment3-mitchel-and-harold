@@ -5,10 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
-import controller.AppManager;
 import model.BoardGames;
 import model.Toy;
 import controller.ToySearch;

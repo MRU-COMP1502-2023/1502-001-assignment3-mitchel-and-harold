@@ -7,7 +7,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import exceptions.CustomException;
 import exceptions.InvalidIntException;
 import exceptions.PlayerRangeException;
@@ -23,16 +24,20 @@ import view.AppMenu;
  * @author Harold Cuellar
  */
 public class AppManager {
+    private static final Logger logger = Logger.getLogger(AppManager.class.getName());
+
 	static ArrayList<Toy> toyType = new ArrayList<>();
 	static int list_size;
 	private final String FILE_PATH = "./res/toys.txt";
 	private AppMenu am;
 
 	public AppManager() throws Exception {
+
 		loadToys();
 		am = new AppMenu();
 		am.FirstTimeDisplay();
 		launchApplication();
+
 	}
 	
 	public AppManager(boolean test) {
@@ -48,8 +53,9 @@ public class AppManager {
 	 * @author Harold Cuellar
 	 */
 	public void loadToys(){
+		logger.info("Loading toys from file...");
+        File txt = new File(FILE_PATH);
 
-		File txt = new File(FILE_PATH);
 		String thisLine;
 		String[] separateLine;
 		if (txt.exists()) {
@@ -165,6 +171,8 @@ public class AppManager {
 	 * @author Harold Cuellar
 	 */
 	public void addToy() throws InvalidIntException {
+		
+		logger.info("adding toys to store");
 
 		try {
 			String serialNumber = am.toySearchPrompt("Serial Number");
@@ -237,6 +245,7 @@ public class AppManager {
    * @param numOfDesigners
    */
 	public void addToy(String serialNumber, String name, String brand, float price, int availableCount, int age, int mininumberofplayers, int maxnumberofplayer, String numOfDesigners) {
+		logger.info("adding toys to file.");
 		String[] list = numOfDesigners.trim().split(",");
 		ArrayList<String> designers = new ArrayList<>();
 		for (String st : list) {

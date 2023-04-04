@@ -1,10 +1,8 @@
 package test;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
-import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +10,6 @@ import controller.AppManager;
 import exceptions.InvalidIntException;
 import model.BoardGames;
 import model.Toy;
-import view.AppMenu;
 /**
  * Testing the AddToy method from The AppManager class.
  * @author Harold Cuellar
