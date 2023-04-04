@@ -1,17 +1,22 @@
 package controller;
-import model.*;
-
-import view.AppMenu;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import exceptions.CustomException;
 import exceptions.InvalidIntException;
 import exceptions.PlayerRangeException;
-
-import java.util.ArrayList;
+import model.Animals;
+import model.BoardGames;
+import model.Figures;
+import model.Puzzles;
+import model.Toy;
+import view.AppMenu;
 
 /** Main controller of store and managing menu inputs
  * @author Mitchel Chanthaseng
