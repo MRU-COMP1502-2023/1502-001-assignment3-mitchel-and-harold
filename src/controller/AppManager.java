@@ -222,7 +222,20 @@ public class AppManager {
 			e.printStackTrace();
 		}
 	}
-
+   /**
+   *method that takes in the toy details as parameters and directly adds the toy to a 
+   *list without any input validation or exception handling for the JUNIT.
+   *
+   * @param serialNumber
+   * @param name
+   * @param brand
+   * @param price
+   * @param availableCount
+   * @param age
+   * @param mininumberofplayers
+   * @param maxnumberofplayer
+   * @param numOfDesigners
+   */
 	public void addToy(String serialNumber, String name, String brand, float price, int availableCount, int age, int mininumberofplayers, int maxnumberofplayer, String numOfDesigners) {
 		String[] list = numOfDesigners.trim().split(",");
 		ArrayList<String> designers = new ArrayList<>();
@@ -307,15 +320,34 @@ public class AppManager {
 		}
 	}
 
+	/**
+	 * @author Harold Cuellar
+	 *  This method takes a Toy object as a parameter and removes it from the toyType list. 
+	 *  It is called by the first removeToy method after it finds the Toy object with the given serial number.
+	 * @param toy_
+	 */
+
 	public void removeToy(Toy toy_) {
 		toyType.remove(toy_);
 	}
-
+	
+	/**
+	 * method is used to remove a toy from the toyType list based on its serial number.
+	 *  It calls the findToyBySerialNumber() method to find the Toy object with the given serial number and then 
+	 *  calls the second removeToy() method to remove the toy from the list.
+	 * @param serialNumber
+	 */
 	public void removeToy(String serialNumber) {
 		Toy toy_ = findToyBySerialNumber(serialNumber);
 		removeToy(toy_);
 	}
-
+	
+	/**
+	 * The findToyBySerialNumber() method looks for a toy that has a specific serial number in a list. If the toy is found, the method returns it.
+	 *  If it's not found, it returns null. The method uses a loop to check each toy's serial number in the list until it finds a match or reaches the end of the list.
+	 * @param serialNumber
+	 * @return toy found by serial number if found
+	 */
 	public Toy findToyBySerialNumber(String serialNumber) {
 		Toy toy_ = null;
 		for (Toy toy: toyType) {
@@ -328,6 +360,7 @@ public class AppManager {
 		}
 		return toy_;
 	}
+	
 	/**
 	 * Method to clear the file 
 	 * @author Harold Cuellar
