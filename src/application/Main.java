@@ -1,5 +1,4 @@
 package application;
-import java.io.File;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -11,7 +10,6 @@ import java.util.logging.FileHandler;
 
 
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -37,12 +35,15 @@ public class Main extends Application {
     	 final Logger logger = Logger.getLogger(Main.class.getName());
     	    FileHandler fileHandler = new FileHandler("myLog.txt", true); // true to append
     	    logger.addHandler(fileHandler);
-    	    SimpleFormatter formatter = new SimpleFormatter();
-    	    fileHandler.setFormatter(formatter);
-    	    logger.info("Logging started");
+    	    fileHandler.setFormatter(new SimpleFormatter());
+//    	    SimpleFormatter formatter = new SimpleFormatter();
+//    	    fileHandler.setFormatter(formatter);
+    	    logger.info("Logging started for main");
 
     	   
     	launch(args);
        
     }
+    
+    
 }

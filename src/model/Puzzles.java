@@ -57,7 +57,6 @@ public class Puzzles extends Toy{
 		PrintWriter writer = new PrintWriter(fw);
 		writer.write(getSerialNumber() + ";" + getName() + ";" + getBrand() + ";" + getPrice()+ ";"+ getAvailableCount() + ";" +getMinimumAge() + ";" + getPuzzleType()+"\n");
 		writer.close();
-
 	}
 
 }

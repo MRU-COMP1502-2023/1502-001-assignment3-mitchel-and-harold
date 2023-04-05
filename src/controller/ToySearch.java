@@ -8,7 +8,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -118,8 +120,15 @@ public class ToySearch {
 	 * Initializer that loads the file with all the toy information and stores it into a toy list.
 	 * Once the file is read, initialize() displays all the toys in scene builder on start up.
 	 * @author Mitchel Chanthaseng
+	 * @throws IOException 
+	 * @throws SecurityException 
 	 */
-	public void initialize() {
+	public void initialize() throws SecurityException, IOException {
+		FileHandler fileHandler = new FileHandler("myLog.txt", true); // true to append
+		LOGGER.addHandler(fileHandler);
+	    SimpleFormatter formatter = new SimpleFormatter();
+	    fileHandler.setFormatter(formatter);
+	    LOGGER.info("Logging started for ToySearch");
 		File txt = new File(FILE_PATH);
 		String thisLine;
 		String[] separateLine;

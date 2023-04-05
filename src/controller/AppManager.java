@@ -7,8 +7,12 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+import application.Main;
 import exceptions.CustomException;
 import exceptions.InvalidIntException;
 import exceptions.PlayerRangeException;
@@ -19,20 +23,37 @@ import model.Puzzles;
 import model.Toy;
 import view.AppMenu;
 
+import javafx.application.Application;
+import java.util.logging.Logger;
+
+
+
+
+
+
+
+
+
+
 /** Main controller of store and managing menu inputs
  * @author Mitchel Chanthaseng
  * @author Harold Cuellar
  */
 public class AppManager   {
 
-    private static final Logger logger = Logger.getLogger(AppManager.class.getName());
 
 	static ArrayList<Toy> toyType = new ArrayList<>();
 	static int list_size;
 	private final String FILE_PATH = "./res/toys.txt";
 	private AppMenu am;
+	private static final Logger LOGGER = Logger.getLogger("Mylogger");
 
 	public AppManager() throws Exception {
+    FileHandler fileHandler = new FileHandler("myLog.txt", true); // true to append
+    LOGGER.addHandler(fileHandler);
+    SimpleFormatter formatter = new SimpleFormatter();
+    fileHandler.setFormatter(formatter);
+    LOGGER.info("Logging started for Appmanager");
 
 		loadToys();
 		am = new AppMenu();
@@ -64,7 +85,7 @@ public class AppManager   {
 	 * @author Harold Cuellar
 	 */
 	public void loadToys(){
-		logger.info("Loading toys from file...");
+		LOGGER.info("Loading toys from file...");
         File txt = new File(FILE_PATH);
 
 		String thisLine;
@@ -153,7 +174,7 @@ public class AppManager   {
 
 			if (userInputInt < 1 || userInputInt > 4) {
 				System.out.println("\n" + userInputInt + " is not a valid option! Try again.\n");
-		        logger.warning("Invalid input. Please enter a number between 1 and 4.");
+				LOGGER.warning("Invalid input. Please enter a number between 1 and 4.");
 
 				launchApplication();
 			}
@@ -188,7 +209,7 @@ public class AppManager   {
 	 */
 	public void addToy() throws InvalidIntException {
 		
-		logger.info("adding toys to store");
+		LOGGER.info("adding toys to store");
 
 		try {
 			String serialNumber = am.toySearchPrompt("Serial Number");
@@ -262,7 +283,7 @@ public class AppManager   {
    * @param numOfDesigners
    */
 	public void addToy(String serialNumber, String name, String brand, float price, int availableCount, int age, int mininumberofplayers, int maxnumberofplayer, String numOfDesigners) {
-		logger.info("adding toys to file.");
+		LOGGER.info("adding toys to file.");
 		String[] list = numOfDesigners.trim().split(",");
 		ArrayList<String> designers = new ArrayList<>();
 		for (String st : list) {
