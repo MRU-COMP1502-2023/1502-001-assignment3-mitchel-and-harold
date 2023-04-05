@@ -111,7 +111,7 @@ public class ToySearch {
 	private final String FILE_PATH = "./res/toys.txt";
 
 	static int list_size;
-	
+
 	private static final Logger LOGGER = Logger.getLogger("Mylogger");
 
 	/**
@@ -327,10 +327,10 @@ public class ToySearch {
 	 * @author Mitchel Chanthaseng
 	 */
 	public void buyButtonHandler() {
-		
+
 
 		Toy selected = toyListView.getSelectionModel().getSelectedItem();
-		LOGGER.info("user purchased: " + selected);
+		LOGGER.info("User purchased: " + selected);
 		if(selected.getAvailableCount() != 0) {
 			selected.setAvailableCount(selected.getAvailableCount() - 1);
 		}
@@ -379,7 +379,7 @@ public class ToySearch {
 	public void addToyButtonHandler() {
 
 		ArrayList<Object> newToy = new ArrayList<Object>();
-		
+
 
 		String sn = snField.getText();
 		String name = nameField.getText();
@@ -393,7 +393,7 @@ public class ToySearch {
 			Toy newToyF = new Figures(sn, name, brand, price, count, age, classification); 
 			toyList.add(newToyF);
 			status.setText("Toy has been added!");
-			LOGGER.info("Figure Toy Added: " + sn +" "+ name+" " + brand +" " + price+'$' +" "+ count+" " + age+" " + classification);
+			LOGGER.info("Figure Toy Added: " + sn +" "+ name+" " + brand +" "+'$' + price +" "+ count+" " + age+" " + classification);
 
 		}
 		else if (animalRadioButton.isSelected()) {
@@ -402,16 +402,16 @@ public class ToySearch {
 			Toy newToyF = new Animals(sn, name, brand, price, count, age, material, size); 
 			toyList.add(newToyF);
 			status.setText("Toy has been added!");
-			LOGGER.info("Animal  Toy Added: " + sn +" "+ name+" " + brand +" " + price+'$' +" "+ count+" " + age+" " + material+" "  +size);
+			LOGGER.info("Animal  Toy Added: " + sn +" "+ name+" " + brand +" "+'$' + price +" "+ count+" " + age+" " + material+" "  +size);
 
-			
+
 		}
 		else if (puzzleRadioButton.isScaleShape()) {
 			char type = typeField.getText().charAt(0);
 			Toy newToyF = new Puzzles(sn, name, brand, price, count, age, type); 
 			toyList.add(newToyF);
 			status.setText("Toy has been added!");
-			LOGGER.info("Puzzle Toy Added: " + sn +" "+ name+" " + brand +" " + price+'$' +" "+ count+" " + age+" " + type);
+			LOGGER.info("Puzzle Toy Added: " + sn +" "+ name+" " + brand +" "+'$' + price +" "+ count+" " + age+" " + type);
 
 		}
 		else if (boardGameRadioButton.isSelected()) {
@@ -426,7 +426,7 @@ public class ToySearch {
 			Toy newToyF = new BoardGames(sn, name, brand, price, count, age, numOfPlayers, designerlist); 
 			toyList.add(newToyF);
 			status.setText("Toy has been added!");
-			LOGGER.info("BoardGame Toy Added: " + sn +" "+ name+" " + brand +" " + price+'$' +" "+ count+" " + age+" " + numOfPlayers+" "  +designerlist);
+			LOGGER.info("BoardGame Toy Added: " + sn +" "+ name+" " + brand +" "+'$' + price +" "+ count+" " + age+" " + numOfPlayers+" "  +designerlist);
 		}
 		else {
 
@@ -467,12 +467,12 @@ public class ToySearch {
 	public void searchToRemoveButtonHandler() {
 		String input = removeField.getText();
 		removeToyListView.getItems().clear();
-
+		LOGGER.info("Searching SN to remove: " + input);
 		for (Toy toy: toyList) {
 			if(toy.getSerialNumber().equals(input)) {
 				removeToyListView.getItems().add(toy);
 			}
-			LOGGER.info("Searching Toy to remove: " +toy);
+
 
 		}
 	}
@@ -484,11 +484,12 @@ public class ToySearch {
 	public void removeButtonHandler() {
 		Toy selected = removeToyListView.getSelectionModel().getSelectedItem();
 		ArrayList<Toy> toyListCopy = (ArrayList<Toy>)toyList.clone();
+		
 		for (Toy toy: toyListCopy) {
 			if (selected == toy) {
 				toyList.remove(toy);
 				removeToyListView.getItems().remove(toy);
-				LOGGER.info("Eemoving toy :"+ toy);
+				LOGGER.info("Removing toy: "+ toy);
 
 			}
 		}
@@ -524,7 +525,7 @@ public class ToySearch {
 		removeToyListView.getItems().clear();
 		for (Toy t: toyList) {
 			removeToyListView.getItems().add(t);
-			
+
 		}
 	}
 }
