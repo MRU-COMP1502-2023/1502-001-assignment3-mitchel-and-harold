@@ -23,7 +23,8 @@ import view.AppMenu;
  * @author Mitchel Chanthaseng
  * @author Harold Cuellar
  */
-public class AppManager {
+public class AppManager   {
+
     private static final Logger logger = Logger.getLogger(AppManager.class.getName());
 
 	static ArrayList<Toy> toyType = new ArrayList<>();
@@ -40,9 +41,19 @@ public class AppManager {
 
 	}
 	
+	/**
+	 * launching the application overloading the AppManager for the JUNIT test
+	 * @author Harold Cuellar
+	 * @param test
+	 */
 	public AppManager(boolean test) {
 		loadToys();
 	}
+	/**
+	 * method thats returns an arraylist of the toys for the JUNIT
+	 * @author Harold Cuellar
+	 * @return
+	 */
 
 	public Toy getLastInserted() {
 		return toyType.get(list_size);
@@ -93,6 +104,7 @@ public class AppManager {
 					//if boardGames
 					if (separateLine[0].charAt(0) == '7' || separateLine[0].charAt(0) == '8'
 							|| separateLine[0].charAt(0) == '9') {
+				        logger.info("creating a boardgame");
 
 						List<String> list = new ArrayList<>();
 						try {
@@ -141,6 +153,8 @@ public class AppManager {
 
 			if (userInputInt < 1 || userInputInt > 4) {
 				System.out.println("\n" + userInputInt + " is not a valid option! Try again.\n");
+		        logger.warning("Invalid input. Please enter a number between 1 and 4.");
+
 				launchApplication();
 			}
 
@@ -161,8 +175,10 @@ public class AppManager {
 		}
 		catch (NumberFormatException e) {
 			System.out.println("\nThis is not an Integer Number! Try Again.\n");
+
 			launchApplication();
 		}
+
 	}
 
 	/**
@@ -182,6 +198,7 @@ public class AppManager {
 			if (validate(serialNumber)) {
 				System.out.println("The Serial Number should contain only digits! try again .");
 				addToy();
+
 			}
 			if (isSerialAlreadyExists(serialNumber)) {
 				System.out.println("The Serial Number already exists! try again .");

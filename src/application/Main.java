@@ -1,4 +1,5 @@
 package application;
+import java.io.File;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -6,10 +7,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.util.logging.FileHandler;
+
 
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 
 public class Main extends Application {
@@ -29,7 +33,16 @@ public class Main extends Application {
 
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void main(String[] args) throws SecurityException, IOException{
+    	 final Logger logger = Logger.getLogger(Main.class.getName());
+    	    FileHandler fileHandler = new FileHandler("myLog.txt", true); // true to append
+    	    logger.addHandler(fileHandler);
+    	    SimpleFormatter formatter = new SimpleFormatter();
+    	    fileHandler.setFormatter(formatter);
+    	    logger.info("Logging started");
+
+    	   
+    	launch(args);
+       
     }
 }

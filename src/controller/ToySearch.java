@@ -200,6 +200,12 @@ public class ToySearch {
 		}
 		LOGGER.info("Data Loaded");
 	}
+	/**
+	 * creating arraylist toy to hold all the toys found by Serial number
+	 * @author Harold cuellar
+	 * @param type
+	 * @return the list of the type of toys chosen
+	 */
 
 	public ArrayList<Toy> findBySerialNumber(String serialNumber) {
 		ArrayList<Toy> toys = new ArrayList();
@@ -211,7 +217,12 @@ public class ToySearch {
 
 		return toys;
 	}
-
+/**
+ * creating Arraylist toy to hold all the toys found by name
+ * @author Harold cuellar
+ * @param name
+ * @return
+ */
 	public ArrayList<Toy> findByName(String name) {
 		ArrayList<Toy> toys = new ArrayList();
 		for (Toy toy: toyList) {
@@ -221,7 +232,12 @@ public class ToySearch {
 		}
 		return toys;
 	}
-
+/**
+ * creating arraylist toy to hold all the toys found by type
+ * @author Harold cuellar
+ * @param type
+ * @return the list of the type of toys chosen
+ */
 	public ArrayList<Toy> findByType(String type) {
 		ArrayList<Toy> toys = new ArrayList();
 		for (Toy toy: toyList) {
@@ -265,9 +281,12 @@ public class ToySearch {
 		}
 		return toys;
 	}
-
+/**
+ * creating a method to add toy in the ToySearch class and make the JUNIT test
+ * @param toy
+ */
 	public void addToy(Toy toy) {
-		list_size++;
+		list_size++;// implementing the list size
 		toyList.add(toy);
 	}
 
@@ -293,12 +312,21 @@ public class ToySearch {
 		else if (typeRadioButton.isSelected()) {
 			toys = findByType(input);
 		}
-		else {
+		else if ( ! typeRadioButton.isSelected() ||!serialNumRadioButton.isSelected() ||! nameRadioButton.isSelected()){
+			LOGGER.warning("did not select a name , serial ,of type when searching");
+			status.setText("Select a classification to search please ");
 			throw new Exception("must select name, serial number, of type");
+
+		}
+		else {
+			LOGGER.severe("unwanted issue when searching");
+			throw new Exception ("unwanted error");
 		}
 
 		for (Toy toy: toys) {
 			toyListView.getItems().add(toy);
+			LOGGER.info("Results for toy/type toy searched :"+ toys);
+
 		}
 	}
 
@@ -336,6 +364,8 @@ public class ToySearch {
 		}
 		else {
 			System.out.println("Selected item is out of stock! Try again.  \n");
+			LOGGER.info("User looked for: " + selected + "\n But is out of stock.");
+
 		}
 
 		try {
@@ -348,6 +378,8 @@ public class ToySearch {
 		catch(Exception exception){
 
 			System.out.println("This is not a valid option! Try again.  \n");
+			LOGGER.severe("The file could not writen.");
+
 
 		}
 
