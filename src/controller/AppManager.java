@@ -27,14 +27,6 @@ import javafx.application.Application;
 import java.util.logging.Logger;
 
 
-
-
-
-
-
-
-
-
 /** Main controller of store and managing menu inputs
  * @author Mitchel Chanthaseng
  * @author Harold Cuellar

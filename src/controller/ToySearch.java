@@ -25,6 +25,10 @@ import model.Figures;
 import model.Puzzles;
 import model.Toy;
 
+/**
+ * Controller of the program that connects to the GUI and manages list changes
+ * @author Mitchel Chanthaseng
+ */
 public class ToySearch {
 
 	//Search Toy Tab Attributes

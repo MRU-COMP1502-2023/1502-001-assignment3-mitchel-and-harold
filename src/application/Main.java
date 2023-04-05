@@ -13,7 +13,10 @@ import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-
+/**
+ * Starting point of the program
+ * @author Mitchel Chanthaseng
+ */
 public class Main extends Application {
 
     @Override
