@@ -125,7 +125,7 @@ public class AppManager   {
 					//if boardGames
 					if (separateLine[0].charAt(0) == '7' || separateLine[0].charAt(0) == '8'
 							|| separateLine[0].charAt(0) == '9') {
-				        logger.info("creating a boardgame");
+//				        logger.info("creating a boardgame");
 
 						List<String> list = new ArrayList<>();
 						try {

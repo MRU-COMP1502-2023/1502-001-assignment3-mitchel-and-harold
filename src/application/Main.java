@@ -32,15 +32,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws SecurityException, IOException{
-    	 final Logger logger = Logger.getLogger(Main.class.getName());
-    	    FileHandler fileHandler = new FileHandler("myLog.txt", true); // true to append
-    	    logger.addHandler(fileHandler);
-    	    fileHandler.setFormatter(new SimpleFormatter());
-//    	    SimpleFormatter formatter = new SimpleFormatter();
-//    	    fileHandler.setFormatter(formatter);
-    	    logger.info("Logging started for main");
-
-    	   
     	launch(args);
        
     }
